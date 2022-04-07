@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microwave.Classes.Interfaces;
 
-namespace Microwave.Classes.Boundary
+namespace MicrowaveOvenLibrary.Boundary
 {
     public class Button : IButton
     {

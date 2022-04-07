@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microwave.Classes.Interfaces;
 
-namespace Microwave.Classes.Boundary
+namespace Microwave.Classes.Boundary 
 {
     public class Door : IDoor
     {
