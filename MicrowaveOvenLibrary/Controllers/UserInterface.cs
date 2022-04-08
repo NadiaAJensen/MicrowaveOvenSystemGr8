@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Microwave.Classes.Interfaces;
+using MicrowaveOvenLibrary.Interfaces;
 
-namespace Microwave.Classes.Controllers
+namespace MicrowaveOvenLibrary.Controllers
 {
     public class UserInterface : IUserInterface
     {

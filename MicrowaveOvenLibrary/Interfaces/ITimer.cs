@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microwave.Classes.Interfaces
+namespace MicrowaveOvenLibrary.Interfaces
 {
     public interface ITimer
     {

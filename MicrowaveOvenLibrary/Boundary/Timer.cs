@@ -1,7 +1,7 @@
 ﻿using System;
-using Microwave.Classes.Interfaces;
+using MicrowaveOvenLibrary.Interfaces;
 
-namespace Microwave.Classes.Boundary
+namespace MicrowaveOvenLibrary.Boundary
 {
     public class Timer : ITimer
     {

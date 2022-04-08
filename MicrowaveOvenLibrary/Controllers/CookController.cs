@@ -1,7 +1,7 @@
 ﻿using System;
-using Microwave.Classes.Interfaces;
+using MicrowaveOvenLibrary.Interfaces;
 
-namespace Microwave.Classes.Controllers
+namespace MicrowaveOvenLibrary.Controllers
 {
     public class CookController : ICookController
     {

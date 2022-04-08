@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Microwave.Classes.Interfaces
+namespace MicrowaveOvenLibrary.Interfaces
 {
     public interface IButton
     {
