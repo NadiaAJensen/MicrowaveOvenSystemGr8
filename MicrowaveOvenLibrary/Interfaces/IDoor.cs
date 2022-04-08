@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace MicrowaveOvenLibrary.Interfaces
 {
-    public interface IOutput
+    public interface IDoor
     {
-        void OutputLine(string line);
+        event EventHandler Opened;
+        event EventHandler Closed;
+
+        void Open();
+        void Close();
     }
 }

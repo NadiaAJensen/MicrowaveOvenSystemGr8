@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microwave.Classes.Interfaces;
+using MicrowaveOvenLibrary.Interfaces;
 
-namespace Microwave.Classes.Boundary 
+namespace MicrowaveOvenLibrary.Boundary
 {
     public class Door : IDoor
     {
