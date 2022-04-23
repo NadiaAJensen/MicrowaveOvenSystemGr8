@@ -58,6 +58,7 @@ namespace MicrowaveOvenLibrary.Controllers
                 isCooking = false;
                 myPowerTube.TurnOff();
                 UI.CookingIsDone();
+                
             }
         }
 
