@@ -10,7 +10,8 @@ namespace MicrowaveOvenSystemGr8
         {
             Button startCancelButton = new Button();
             Button powerButton = new Button();
-            Button timeButton = new Button();
+            Button minutesButton = new Button();
+            Button secondsButton = new Button();
 
             Door door = new Door();
 
@@ -26,16 +27,20 @@ namespace MicrowaveOvenSystemGr8
 
             CookController cooker = new CookController(timer, display, powerTube);
 
-            UserInterface ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+            UserInterface ui = new UserInterface(powerButton, minutesButton, secondsButton, startCancelButton, door, display, light, cooker);
 
             // Finish the double association
             cooker.UI = ui;
 
-            // Simulate a simple sequence
+            // Simulate a simple sequence 1,5min
 
             powerButton.Press();
 
-            timeButton.Press();
+            minutesButton.Press();
+            for (int i = 0; i < 30; i++)
+            {
+                secondsButton.Press();
+            }
 
             startCancelButton.Press();
 
