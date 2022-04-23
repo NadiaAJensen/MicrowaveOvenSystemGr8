@@ -9,6 +9,8 @@ namespace MicrowaveOvenLibrary.Boundary
 
         public event EventHandler Expired;
         public event EventHandler TimerTick;
+        public event EventHandler AddTime;
+        public event EventHandler SubtractTime;
 
         private System.Timers.Timer timer;
 
@@ -50,6 +52,18 @@ namespace MicrowaveOvenLibrary.Boundary
             {
                 Expire();
             }
+        }
+
+        public int AddOnTime()
+        {
+            AddTime?.Invoke(this, EventArgs.Empty);
+            return TimeRemaining += 1;
+        }
+
+        public int SubtractOnTime()
+        {
+            SubtractTime?.Invoke(this, EventArgs.Empty);
+            return TimeRemaining -= 1;
         }
 
     }
