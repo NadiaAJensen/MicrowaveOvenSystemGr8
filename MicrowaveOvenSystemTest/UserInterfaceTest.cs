@@ -172,6 +172,38 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
+        public void SetTimeSeconds_StartButton_CookerIsCalled()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            for (int i = 0; i <= 30; i++)
+            {
+                secondsButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Time is already at 1 minute. Therefore:
+            cooker.Received(1).StartCooking(50, 90);
+        }
+
+        [Test]
+        public void SetTimeSeconds_AboveSixty_StartButton_CookerIsCalled()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            for (int i = 0; i <= 70; i++)
+            {
+                secondsButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Time is already at 1 minute. Therefore:
+            cooker.Received(1).StartCooking(50, 130);
+        }
+
+        [Test]
         public void SetTime_DoorOpened_DisplayCleared()
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);

@@ -47,7 +47,7 @@ namespace MicrowaveOvenLibrary.Controllers
         private void ResetValues()
         {
             powerLevel = 50;
-            minutes = 1;
+            minutes = 0;
             seconds = 0;
         }
 
@@ -91,6 +91,11 @@ namespace MicrowaveOvenLibrary.Controllers
                     break;
                 case States.SETTIME:
                     seconds += 1;
+                    if (seconds >= 60)
+                    {
+                        minutes += 1;
+                        seconds = 0;
+                    }
                     myDisplay.ShowTime(minutes, seconds);
                     break;
             }
