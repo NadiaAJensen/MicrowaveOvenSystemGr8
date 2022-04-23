@@ -339,13 +339,21 @@ namespace Microwave.Test.Unit
             light.Received(1).TurnOff();
         }
 
-        //tilføjet - virker ikke
-        //[Test]
-        //public void Cooking_CookingIsDone_Buzz3TimesIsCalled()
-        //{
-        //    uut.CookingIsDone();
-        //    soundBuzzer.Received(1).Buzz3Times();
-        //}
+        //tilføjet
+        [Test]
+        public void Cooking_CookingIsDone_Buzz3TimesIsCalled()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in cooking
+
+            uut.CookingIsDone();
+            soundBuzzer.Received(1).Buzz3Times();
+            //.Buzz3Times();
+        }
 
     }
 
