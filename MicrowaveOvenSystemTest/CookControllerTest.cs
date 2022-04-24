@@ -95,7 +95,7 @@ namespace Microwave.Test.Unit
         public void Cooking_SubtractTime()
         {
             uut.StartCooking(50, 60);
-            uut.AddOnTime(this, EventArgs.Empty);
+            uut.SubtractTime(this, EventArgs.Empty);
             display.Received(1).ShowTime(timer.TimeRemaining / 60, timer.TimeRemaining % 60);
         }
 
