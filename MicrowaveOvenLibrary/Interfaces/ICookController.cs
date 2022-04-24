@@ -11,7 +11,7 @@ namespace MicrowaveOvenLibrary.Interfaces
         void StartCooking(int power, int time);
         void Stop();
 
-        void AddOnTime(object sender, EventArgs e, int addedTime);
-        void SubtractTime(object sender, EventArgs e, int subtractedTime);
+        void AddOnTime(object sender, EventArgs e); //New method
+        void SubtractTime(object sender, EventArgs e); //New method
     }
 }

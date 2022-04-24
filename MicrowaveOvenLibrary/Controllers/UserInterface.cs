@@ -24,8 +24,8 @@ namespace MicrowaveOvenLibrary.Controllers
             IButton powerButton,
             IButton timeButton,
             IButton startCancelButton,
-            IButton addTimeButton,
-            IButton subtractTimeButton,
+            IButton addTimeButton, //New button by Nadia
+            IButton subtractTimeButton, //New button made by Nadia
             IDoor door,
             IDisplay display,
             ILight light,
@@ -34,8 +34,8 @@ namespace MicrowaveOvenLibrary.Controllers
             powerButton.Pressed += new EventHandler(OnPowerPressed);
             timeButton.Pressed += new EventHandler(OnTimePressed);
             startCancelButton.Pressed += new EventHandler(OnStartCancelPressed);
-            addTimeButton.Pressed += new EventHandler(AddTimePressed);
-            subtractTimeButton.Pressed += new EventHandler(SubtractTimePresses);
+            addTimeButton.Pressed += new EventHandler(AddTimePressed); //New button
+            subtractTimeButton.Pressed += new EventHandler(SubtractTimePressed); //New button
 
             door.Closed += new EventHandler(OnDoorClosed);
             door.Opened += new EventHandler(OnDoorOpened);
@@ -45,22 +45,25 @@ namespace MicrowaveOvenLibrary.Controllers
             myDisplay = display;
         }
 
-        private void AddTimePressed(object sender, EventArgs e, int addedtime)
+        //New method made by Nadia
+        private void AddTimePressed(object sender, EventArgs e)
         {
             switch (myState)
             {
                 case States.COOKING:
-                    myCooker.AddOnTime(sender, e, addedtime);
+                    myCooker.AddOnTime(sender, e);
                     break;
             }
         }
 
-        private void SubtractTimePresses(object sender, EventArgs e)
+        //New method made by Nadia
+        private void SubtractTimePressed(object sender, EventArgs e)
         {
             switch (myState)
             {
                 case States.COOKING:
-
+                    myCooker.SubtractTime(sender, e);
+                    break;
             }
         }
 

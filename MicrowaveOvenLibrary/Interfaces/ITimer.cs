@@ -12,13 +12,11 @@ namespace MicrowaveOvenLibrary.Interfaces
         int TimeRemaining { get; }
         event EventHandler Expired;
         event EventHandler TimerTick;
-        event EventHandler AddTime;
-        event EventHandler SubtractTime;
 
         void Start(int time);
         void Stop();
 
-        int AddOnTime();
-        int SubtractOnTime();
+        int AddOnTime(); //New method
+        int SubtractOnTime(); //New method
     }
 }

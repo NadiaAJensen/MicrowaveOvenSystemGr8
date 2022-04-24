@@ -35,7 +35,6 @@ namespace MicrowaveOvenLibrary.Controllers
 
             timer.Expired += new EventHandler(OnTimerExpired);
             timer.TimerTick += new EventHandler(OnTimerTick);
-            timer.AddTime += new EventHandler(AddOnTimer);
         }
 
         public void StartCooking(int power, int time)
@@ -71,7 +70,8 @@ namespace MicrowaveOvenLibrary.Controllers
             }
         }
 
-        public void AddOnTimer(object sender, EventArgs e, int addedTime)
+        //New method made by Nadia
+        public void AddOnTime(object sender, EventArgs e)
         {
             if (isCooking)
             {
@@ -81,7 +81,8 @@ namespace MicrowaveOvenLibrary.Controllers
             }
         }
 
-        public void SubtractTimer(object sender, EventArgs e, int subtractedTime)
+        //New method made by Nadia
+        public void SubtractTime(object sender, EventArgs e)
         {
             if (isCooking)
             {

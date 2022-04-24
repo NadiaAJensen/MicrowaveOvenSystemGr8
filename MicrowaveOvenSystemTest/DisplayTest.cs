@@ -12,9 +12,13 @@ namespace Microwave.Test.Unit
         private Display uut;
         private IOutput output;
 
+        private ITimer myTimer;
+
         [SetUp]
         public void Setup()
         {
+            myTimer = Substitute.For<ITimer>();
+
             output = Substitute.For<IOutput>();
             uut = new Display(output);
         }
@@ -66,6 +70,22 @@ namespace Microwave.Test.Unit
         {
             uut.Clear();
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains("cleared")));
+        }
+
+        //New test made by Nadia
+        [Test]
+        public void AddOnTime_DisplayAddedTime()
+        {
+            myTimer.AddOnTime();
+            uut.ShowTime(myTimer.TimeRemaining / 60, myTimer.TimeRemaining % 60);
+        }
+
+        //New test made by Nadia
+        [Test]
+        public void SubtractTime_DisplaySubtractedTime()
+        {
+            myTimer.SubtractOnTime();
+            uut.ShowTime(myTimer.TimeRemaining / 60, myTimer.TimeRemaining % 60);
         }
 
     }
