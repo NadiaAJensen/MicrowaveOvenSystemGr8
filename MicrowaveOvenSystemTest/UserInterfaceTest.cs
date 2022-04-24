@@ -41,6 +41,8 @@ namespace Microwave.Test.Unit
                 display,
                 light,
                 cooker,powertube);
+
+            powertube.Maxpower = 700;
         }
 
         [Test]
