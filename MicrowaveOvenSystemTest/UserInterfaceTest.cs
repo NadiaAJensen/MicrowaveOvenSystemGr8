@@ -48,7 +48,7 @@ namespace Microwave.Test.Unit
             soundBuzzer = Substitute.For<ISoundbuzzer>();
 
 
-            uut = new UserInterface(powerButton, secondsButton, startCancelButton, addButton,subtractButton,
+            uut = new UserInterface(powerButton, timeButton,secondsButton, startCancelButton, addButton,subtractButton,
                 door,
                 display,
                 light,
