@@ -21,6 +21,9 @@ namespace Microwave.Test.Integration
         private IDisplay display;
         private ICookController cooker;
 
+
+        private ISoundbuzzer soundbuzzer;
+
         [SetUp]
         public void Setup()
         {
@@ -32,8 +35,10 @@ namespace Microwave.Test.Integration
             light = Substitute.For<ILight>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
+            soundbuzzer = Substitute.For<ISoundbuzzer>();//
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker, soundbuzzer);
+
         }
 
         [Test]

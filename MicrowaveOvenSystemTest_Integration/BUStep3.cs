@@ -25,6 +25,9 @@ namespace Microwave.Test.Integration
 
         private Door door;
 
+
+        private SoundBuzzer soundBuzzer;
+      
         [SetUp]
         public void Setup()
         {
@@ -43,11 +46,16 @@ namespace Microwave.Test.Integration
             light = new Light(output);
 
             cooker = new CookController(timer, display, powerTube);
+
+
+            soundBuzzer = new SoundBuzzer(output);
+
             
             ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
                 door,
-                display, light, cooker);
+                display, light, cooker, soundBuzzer);
+
 
             cooker.UI = ui;
 
