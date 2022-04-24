@@ -46,7 +46,7 @@ namespace Microwave.Test.Integration
 
             soundbuzzer = new SoundBuzzer(output);
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker, soundbuzzer, powerTube);
+            ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker, powerTube, soundbuzzer);
             cooker.UI = ui;
 
             powerTube.Maxpower = 700;
