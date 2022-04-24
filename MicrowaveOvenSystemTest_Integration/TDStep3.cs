@@ -19,6 +19,7 @@ namespace Microwave.Test.Integration
         private Button startCancelButton;
         private IButton addButton;
         private IButton subtractButton;
+        private Button secondsButton;
 
         private UserInterface ui;
 
@@ -30,6 +31,7 @@ namespace Microwave.Test.Integration
         private Timer timer;
 
         private IOutput output;
+        private ISoundbuzzer soundbuzzer;
 
         [SetUp]
         public void Setup()
@@ -40,18 +42,21 @@ namespace Microwave.Test.Integration
             startCancelButton = new Button();
             addButton = Substitute.For<IButton>();
             subtractButton = Substitute.For<IButton>();
-
+            secondsButton = new Button();
             output = Substitute.For<IOutput>();
 
             light = new Light(output);
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerTube = new PowerTube(output,700);
             timer = new Timer();
 
 
             cooker = new CookController(timer, display, powerTube);
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, addButton, subtractButton, door, display, light, cooker);
+            soundbuzzer = new SoundBuzzer(output);
+
+            ui = new UserInterface(powerButton, timeButton, secondsButton, startCancelButton, addButton, subtractButton,door, display, light, cooker, powerTube,soundbuzzer);
+
             cooker.UI = ui;
         }
 
@@ -157,16 +162,16 @@ namespace Microwave.Test.Integration
 
             light = new Light(output);
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerTube = new PowerTube(output,700);
             var faketimer = Substitute.For<ITimer>();
+            var powertube = Substitute.For<IPowerTube>();
 
             // Make a new cooker, with the 
             cooker = new CookController(faketimer, display, powerTube);
             // Then we must make a new UI
-            ui = new UserInterface(
-                powerButton, timeButton, startCancelButton, addButton, subtractButton,
-                door, display, light, cooker);
+            ui = new UserInterface(powerButton, timeButton, secondsButton, startCancelButton, addButton, subtractButton,door, display, light, cooker, powerTube,soundbuzzer);
             // And make the association
+
             cooker.UI = ui;
 
             // Set the fake timer

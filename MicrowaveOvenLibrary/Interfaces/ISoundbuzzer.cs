@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace MicrowaveOvenLibrary.Interfaces
 {
-    public interface IPowerTube
+    public interface ISoundbuzzer
     {
-       public int Maxpower { get; set; }
-        void TurnOn(int power);
-
-        void TurnOff();
+        void Buzz3Times();
     }
 }

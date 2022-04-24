@@ -27,8 +27,12 @@ namespace Microwave.Test.Integration
         private IButton startCancelButton;
         private IButton addButton;
         private IButton subtractButton;
+        private IButton secondsButton;
 
         private IDoor door;
+
+
+        private ISoundbuzzer soundbuzzer;
 
         [SetUp]
         public void Setup()
@@ -40,22 +44,22 @@ namespace Microwave.Test.Integration
             startCancelButton = Substitute.For<IButton>();
             addButton = Substitute.For<IButton>();
             subtractButton = Substitute.For<IButton>();
-
+            secondsButton = Substitute.For<IButton>();
             door = Substitute.For<IDoor>();
 
             timer = new Timer();
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerTube = new PowerTube(output,700);
 
             light = new Light(output);
 
             cooker = new CookController(timer, display, powerTube);
 
 
-            ui = new UserInterface(
-                powerButton, timeButton, startCancelButton, addButton, subtractButton,
-                door,
-                display, light, cooker);
+            soundbuzzer = new SoundBuzzer(output);
+
+
+            ui = new UserInterface(powerButton, timeButton, secondsButton, startCancelButton, addButton, subtractButton,door, display, light, cooker, powerTube,soundbuzzer);
 
             cooker.UI = ui;
 
