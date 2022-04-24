@@ -150,6 +150,8 @@ namespace Microwave.Test.Integration
             powerButton = new Button();
             timeButton = new Button();
             startCancelButton = new Button();
+            addButton = new Button();
+            subtractButton = new Button();
 
             output = Substitute.For<IOutput>();
 
@@ -162,7 +164,7 @@ namespace Microwave.Test.Integration
             cooker = new CookController(faketimer, display, powerTube);
             // Then we must make a new UI
             ui = new UserInterface(
-                powerButton, timeButton, startCancelButton,
+                powerButton, timeButton, startCancelButton, addButton, subtractButton,
                 door, display, light, cooker);
             // And make the association
             cooker.UI = ui;
