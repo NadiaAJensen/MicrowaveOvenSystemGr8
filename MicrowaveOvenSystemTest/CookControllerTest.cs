@@ -83,5 +83,21 @@ namespace Microwave.Test.Unit
             powerTube.Received().TurnOff();
         }
 
+        [Test]
+        public void Cooking_AddTime()
+        {
+            uut.StartCooking(50, 60);
+            uut.AddOnTime(this, EventArgs.Empty);
+            display.Received(1).ShowTime(timer.TimeRemaining / 60, timer.TimeRemaining % 60);
+        }
+
+        [Test]
+        public void Cooking_SubtractTime()
+        {
+            uut.StartCooking(50, 60);
+            uut.SubtractTime(this, EventArgs.Empty);
+            display.Received(1).ShowTime(timer.TimeRemaining / 60, timer.TimeRemaining % 60);
+        }
+
     }
 }
