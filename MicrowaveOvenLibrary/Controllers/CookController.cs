@@ -72,5 +72,27 @@ namespace MicrowaveOvenLibrary.Controllers
                 myDisplay.ShowTime(remaining / 60, remaining % 60);
             }
         }
+
+        //New method made by Nadia
+        public void AddOnTime(object sender, EventArgs e)
+        {
+            if (isCooking)
+            {
+                myTimer.AddOnTime();
+                int remaining = myTimer.TimeRemaining;
+                myDisplay.ShowTime(remaining / 60, remaining % 60);
+            }
+        }
+
+        //New method made by Nadia
+        public void SubtractTime(object sender, EventArgs e)
+        {
+            if (isCooking)
+            {
+                myTimer.SubtractOnTime();
+                int remaining = myTimer.TimeRemaining;
+                myDisplay.ShowTime(remaining / 60, remaining % 60);
+            }
+        }
     }
 }

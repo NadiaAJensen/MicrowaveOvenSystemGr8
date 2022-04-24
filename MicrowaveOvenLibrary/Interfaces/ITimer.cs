@@ -15,5 +15,8 @@ namespace MicrowaveOvenLibrary.Interfaces
 
         void Start(int time);
         void Stop();
+
+        int AddOnTime(); //New method
+        int SubtractOnTime(); //New method
     }
 }

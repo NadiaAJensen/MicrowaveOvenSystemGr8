@@ -52,5 +52,17 @@ namespace MicrowaveOvenLibrary.Boundary
             }
         }
 
+        //New method made by Nadia
+        public int AddOnTime()
+        {
+            return TimeRemaining += (1*60);
+        }
+
+        //New method made by Nadia
+        public int SubtractOnTime()
+        {
+            return TimeRemaining -= (1*60);
+        }
+
     }
 }

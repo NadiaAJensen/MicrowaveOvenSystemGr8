@@ -17,6 +17,8 @@ namespace Microwave.Test.Integration
         private Button powerButton;
         private Button timeButton;
         private Button startCancelButton;
+        private IButton addButton;
+        private IButton subtractButton;
         private Button secondsButton;
 
         private UserInterface ui;
@@ -38,8 +40,9 @@ namespace Microwave.Test.Integration
             powerButton = new Button();
             timeButton = new Button();
             startCancelButton = new Button();
+            addButton = Substitute.For<IButton>();
+            subtractButton = Substitute.For<IButton>();
             secondsButton = new Button();
-
             output = Substitute.For<IOutput>();
 
             light = new Light(output);
@@ -50,11 +53,10 @@ namespace Microwave.Test.Integration
 
             cooker = new CookController(timer, display, powerTube);
 
-
-
             soundbuzzer = new SoundBuzzer(output);
 
-            ui = new UserInterface(powerButton, timeButton,secondsButton, startCancelButton, door, display, light, cooker, powerTube, soundbuzzer);
+            ui = new UserInterface(powerButton, minutesButton, secondsButton, startCancelButton, addButton, subtractButton,door, display, light, cooker, powerTube,soundBuzzer);
+
             cooker.UI = ui;
         }
 
@@ -153,6 +155,8 @@ namespace Microwave.Test.Integration
             powerButton = new Button();
             timeButton = new Button();
             startCancelButton = new Button();
+            addButton = new Button();
+            subtractButton = new Button();
 
             output = Substitute.For<IOutput>();
 
@@ -165,10 +169,8 @@ namespace Microwave.Test.Integration
             // Make a new cooker, with the 
             cooker = new CookController(faketimer, display, powerTube);
             // Then we must make a new UI
-            ui = new UserInterface(
-                powerButton, timeButton,secondsButton, startCancelButton,
-                door, display, light, cooker, powerTube, soundbuzzer);
-// And make the association
+            ui = new UserInterface(powerButton, minutesButton, secondsButton, startCancelButton, addButton, subtractButton,door, display, light, cooker, powerTube,soundBuzzer);
+            // And make the association
 
             cooker.UI = ui;
 

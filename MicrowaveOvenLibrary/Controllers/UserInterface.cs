@@ -35,6 +35,8 @@ namespace MicrowaveOvenLibrary.Controllers
             IButton timeButton,
             IButton secondsButton,
             IButton startCancelButton,
+            IButton addTimeButton, //New button by Nadia
+            IButton subtractTimeButton, //New button made by Nadia
             IDoor door,
             IDisplay display,
             ILight light,
@@ -45,6 +47,8 @@ namespace MicrowaveOvenLibrary.Controllers
             timeButton.Pressed += new EventHandler(OnTimePressed);
             secondsButton.Pressed += new EventHandler(OnSecondsTimePressed);
             startCancelButton.Pressed += new EventHandler(OnStartCancelPressed);
+            addTimeButton.Pressed += new EventHandler(AddTimePressed); //New button
+            subtractTimeButton.Pressed += new EventHandler(SubtractTimePressed); //New button
 
             door.Closed += new EventHandler(OnDoorClosed);
             door.Opened += new EventHandler(OnDoorOpened);
@@ -54,6 +58,28 @@ namespace MicrowaveOvenLibrary.Controllers
             myDisplay = display;
             _powerTube = powertube;
             mySoundBuzzer = soundBuzzer;//
+        }
+
+        //New method made by Nadia
+        private void AddTimePressed(object sender, EventArgs e)
+        {
+            switch (myState)
+            {
+                case States.COOKING:
+                    myCooker.AddOnTime(sender, e);
+                    break;
+            }
+        }
+
+        //New method made by Nadia
+        private void SubtractTimePressed(object sender, EventArgs e)
+        {
+            switch (myState)
+            {
+                case States.COOKING:
+                    myCooker.SubtractTime(sender, e);
+                    break;
+            }
         }
 
         private void ResetValues()
@@ -110,6 +136,7 @@ namespace MicrowaveOvenLibrary.Controllers
                     }
                     myDisplay.ShowTime(minutes, seconds);
                     break;
+
             }
         }
 

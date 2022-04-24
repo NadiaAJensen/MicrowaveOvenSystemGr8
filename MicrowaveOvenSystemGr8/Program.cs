@@ -10,9 +10,10 @@ namespace MicrowaveOvenSystemGr8
         {
             Button startCancelButton = new Button();
             Button powerButton = new Button();
+            Button addButton = new Button(); //New button
+            Button subtractButton = new Button(); //New button
             Button minutesButton = new Button();
             Button secondsButton = new Button();
-
             Door door = new Door();
 
             Output output = new Output();
@@ -30,8 +31,7 @@ namespace MicrowaveOvenSystemGr8
 
             CookController cooker = new CookController(timer, display, powerTube);
 
-
-            UserInterface ui = new UserInterface(powerButton, minutesButton, secondsButton, startCancelButton, door, display, light, cooker, powerTube,soundBuzzer);//
+            UserInterface ui = new UserInterface(powerButton, minutesButton, secondsButton, startCancelButton, addButton, subtractButton,door, display, light, cooker, powerTube,soundBuzzer);//
 
             // Finish the double association
             cooker.UI = ui;
@@ -48,12 +48,30 @@ namespace MicrowaveOvenSystemGr8
 
             startCancelButton.Press();
 
-            // The simple sequence should now run
-
-            System.Console.WriteLine("When you press enter, the program will stop");
+            // The simple sequence should now run //Here Nadia made some changes
+            bool cont = true;
+            System.Console.WriteLine("When you press [C], the program will stop");
+            System.Console.WriteLine("Add on 1 minute, press [A] or subtract 1 minute, press [S]");
             // Wait for input
-
-            System.Console.ReadLine();
+            while (cont)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                switch (key.KeyChar)
+                {
+                    case 'a':
+                    case 'A':
+                        addButton.Press();
+                        break;
+                    case 's':
+                    case 'S':
+                        subtractButton.Press();
+                        break;
+                    case 'c':
+                    case 'C':
+                        cont = false;
+                        break;
+                }
+            }
         }
     }
 }
