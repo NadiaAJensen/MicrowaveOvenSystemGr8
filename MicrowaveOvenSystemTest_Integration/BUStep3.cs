@@ -41,7 +41,7 @@ namespace Microwave.Test.Integration
 
             timer = new Timer();
             display = new Display(output);
-            powerTube = new PowerTube(output);
+            powerTube = new PowerTube(output,700);
 
             light = new Light(output);
 
@@ -54,8 +54,7 @@ namespace Microwave.Test.Integration
             ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
                 door,
-                display, light, cooker, soundBuzzer);
-
+                display, light, cooker, soundBuzzer,powerTube);
 
             cooker.UI = ui;
 

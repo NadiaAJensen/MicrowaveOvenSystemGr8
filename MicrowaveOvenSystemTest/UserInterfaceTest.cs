@@ -19,6 +19,7 @@ namespace Microwave.Test.Unit
 
         private IDisplay display;
         private ILight light;
+        private IPowerTube powertube;
 
         private ICookController cooker;
 
@@ -35,6 +36,7 @@ namespace Microwave.Test.Unit
             light = Substitute.For<ILight>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
+            powertube = Substitute.For<IPowerTube>();
 
             soundBuzzer = Substitute.For<ISoundbuzzer>();
 
@@ -44,8 +46,9 @@ namespace Microwave.Test.Unit
                 door,
                 display,
                 light,
-                cooker, soundBuzzer);
+                cooker, soundBuzzer,powertube);
 
+            powertube.Maxpower = 700;
         }
 
         [Test]

@@ -19,6 +19,7 @@ namespace MicrowaveOvenLibrary.Controllers
         private ICookController myCooker;
         private ILight myLight;
         private IDisplay myDisplay;
+        private IPowerTube _powerTube;
 
 
         //  SB
@@ -35,8 +36,7 @@ namespace MicrowaveOvenLibrary.Controllers
             IDoor door,
             IDisplay display,
             ILight light,
-
-            ICookController cooker, ISoundbuzzer soundBuzzer)//
+            ICookController cooker,IPowerTube powertube, ISoundbuzzer soundBuzzer)
 
         {
             powerButton.Pressed += new EventHandler(OnPowerPressed);
@@ -49,6 +49,7 @@ namespace MicrowaveOvenLibrary.Controllers
             myCooker = cooker;
             myLight = light;
             myDisplay = display;
+            _powerTube = powertube;
             mySoundBuzzer = soundBuzzer;//
         }
 
@@ -67,7 +68,7 @@ namespace MicrowaveOvenLibrary.Controllers
                     myState = States.SETPOWER;
                     break;
                 case States.SETPOWER:
-                    powerLevel = (powerLevel >= 700 ? 50 : powerLevel+50);
+                    powerLevel = (powerLevel >= _powerTube.Maxpower ? 50 : powerLevel+50);
                     myDisplay.ShowPower(powerLevel);
                     break;
             }
