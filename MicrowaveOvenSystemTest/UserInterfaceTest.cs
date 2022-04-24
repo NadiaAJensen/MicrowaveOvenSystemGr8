@@ -215,11 +215,6 @@ namespace Microwave.Test.Unit
             cooker.Received(1).SubtractTime(this, EventArgs.Empty);
         }
 
-        public void AddTimeTest()
-        {
-            
-        }
-
 
         [Test]
         public void SetTimeSeconds_StartButton_CookerIsCalled()
