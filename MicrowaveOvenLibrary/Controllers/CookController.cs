@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MicrowaveOvenLibrary.Interfaces;
 
 namespace MicrowaveOvenLibrary.Controllers
@@ -14,6 +15,7 @@ namespace MicrowaveOvenLibrary.Controllers
         private IDisplay myDisplay;
         private IPowerTube myPowerTube;
         private ITimer myTimer;
+        private int maxpower;
 
         public CookController(
             ITimer timer,
@@ -21,7 +23,8 @@ namespace MicrowaveOvenLibrary.Controllers
             IPowerTube powerTube,
             IUserInterface ui) : this(timer, display, powerTube)
         {
-            UI = ui;
+           UI = ui;
+           maxpower = myPowerTube.Maxpower;
         }
 
         public CookController(

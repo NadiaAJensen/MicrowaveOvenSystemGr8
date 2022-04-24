@@ -17,8 +17,9 @@ namespace Microwave.Test.Unit
         public void Setup()
         {
             output = Substitute.For<IOutput>();
-            uut = new PowerTube(output);
+            uut = new PowerTube(output,700);
         }
+
 
         [TestCase(1)]
         [TestCase(50)]
@@ -62,5 +63,15 @@ namespace Microwave.Test.Unit
             uut.TurnOn(50);
             Assert.Throws<System.ApplicationException>(() => uut.TurnOn(60));
         }
-    }
+
+
+        [Test]
+        public void maxpower_isSetCorrect()
+        {
+           Assert.That(uut.Maxpower.Equals(700));
+        }
+
+
+
+   }
 }
