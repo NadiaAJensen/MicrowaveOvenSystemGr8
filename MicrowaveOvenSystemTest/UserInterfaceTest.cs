@@ -17,18 +17,25 @@ namespace Microwave.Test.Unit
         private IButton addButton;
         private IButton subtractButton;
 
+        private IButton secondsButton;
+
         private IDoor door;
 
         private IDisplay display;
         private ILight light;
+        private IPowerTube powertube;
 
         private ICookController cooker;
 
+
+        private ISoundbuzzer soundBuzzer;
+      
         [SetUp]
         public void Setup()
         {
             powerButton = Substitute.For<IButton>();
             timeButton = Substitute.For<IButton>();
+            secondsButton = Substitute.For<IButton>();
             startCancelButton = Substitute.For<IButton>();
             addButton = Substitute.For<IButton>();
             subtractButton = Substitute.For<IButton>();
@@ -36,14 +43,18 @@ namespace Microwave.Test.Unit
             light = Substitute.For<ILight>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
+            powertube = Substitute.For<IPowerTube>();
 
-            uut = new UserInterface(
-                powerButton, timeButton, startCancelButton,
-                addButton,subtractButton,
+            soundBuzzer = Substitute.For<ISoundbuzzer>();
+
+
+            uut = new UserInterface(powerButton, secondsButton, startCancelButton, addButton,subtractButton,
                 door,
                 display,
                 light,
-                cooker);
+                cooker, powertube, soundBuzzer);
+
+            powertube.Maxpower = 700;
         }
 
         [Test]
@@ -204,6 +215,54 @@ namespace Microwave.Test.Unit
             cooker.Received(1).SubtractTime(this, EventArgs.Empty);
         }
 
+
+        [Test]
+        public void SetTimeSeconds_StartButton_CookerIsCalled()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            for (int i = 0; i <= 30; i++)
+            {
+                secondsButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Time is already at 1 minute. Therefore:
+            cooker.Received(1).StartCooking(50, 90);
+        }
+
+        [Test]
+        public void SetTimeSeconds_AboveSixty_StartButton_CookerIsCalled()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            for (int i = 0; i <= 70; i++)
+            {
+                secondsButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Time is already at 1 minute. Therefore:
+            cooker.Received(1).StartCooking(50, 130);
+        }
+
+        [Test]
+        public void SetTimeSeconds_AboveSixty_StartButton_DisplayIsCorrect()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            for (int i = 0; i <= 70; i++)
+            {
+                secondsButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Time is already at 1 minute. Therefore:
+            display.Received(1).ShowTime(Arg.Is<int>(2), Arg.Is<int>(10));
+        }
 
         [Test]
         public void SetTime_DoorOpened_DisplayCleared()
@@ -369,6 +428,23 @@ namespace Microwave.Test.Unit
             startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
             light.Received(1).TurnOff();
+        }
+
+
+        //tilføjet:
+        [Test]
+        public void Cooking_CookingIsDone_Buzz3TimesIsCalled()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in cooking
+
+            uut.CookingIsDone();
+            soundBuzzer.Received(1).Buzz3Times();
+            
         }
 
 

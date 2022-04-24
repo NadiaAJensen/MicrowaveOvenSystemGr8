@@ -16,12 +16,17 @@ namespace Microwave.Test.Integration
         private Button startCancelButton;
         private IButton addButton;
         private IButton subtractButton;
+        private Button secondsButton;
 
         private UserInterface ui;
 
         private ILight light;
         private IDisplay display;
+        private IPowerTube powertube;
         private ICookController cooker;
+
+
+        private ISoundbuzzer soundbuzzer;
 
         [SetUp]
         public void Setup()
@@ -32,12 +37,14 @@ namespace Microwave.Test.Integration
             startCancelButton = new Button();
             addButton = Substitute.For<IButton>();
             subtractButton = Substitute.For<IButton>();
-
+            secondsButton = new Button();
             light = Substitute.For<ILight>();
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
 
-            ui = new UserInterface(powerButton, timeButton, startCancelButton, addButton, subtractButton, door, display, light, cooker);
+            soundbuzzer = Substitute.For<ISoundbuzzer>();//
+            powertube = Substitute.For<IPowerTube>();
+            ui = new UserInterface(powerButton, minutesButton, secondsButton, startCancelButton, addButton, subtractButton,door, display, light, cooker, powerTube,soundBuzzer);
         }
 
         [Test]

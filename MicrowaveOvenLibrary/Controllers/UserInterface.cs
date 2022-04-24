@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
+
+using MicrowaveOvenLibrary.Boundary;
+
 using MicrowaveOvenLibrary.Interfaces;
 
 namespace MicrowaveOvenLibrary.Controllers
@@ -16,23 +19,33 @@ namespace MicrowaveOvenLibrary.Controllers
         private ICookController myCooker;
         private ILight myLight;
         private IDisplay myDisplay;
+        private IPowerTube _powerTube;
+
+
+        //  SB
+        private ISoundbuzzer mySoundBuzzer;
+
 
         private int powerLevel = 50;
-        private int time = 1;
+        private int minutes = 1;
+        private int seconds = 0;
 
         public UserInterface(
             IButton powerButton,
             IButton timeButton,
+            IButton secondsButton,
             IButton startCancelButton,
             IButton addTimeButton, //New button by Nadia
             IButton subtractTimeButton, //New button made by Nadia
             IDoor door,
             IDisplay display,
             ILight light,
-            ICookController cooker)
+            ICookController cooker,IPowerTube powertube, ISoundbuzzer soundBuzzer)
+
         {
             powerButton.Pressed += new EventHandler(OnPowerPressed);
             timeButton.Pressed += new EventHandler(OnTimePressed);
+            secondsButton.Pressed += new EventHandler(OnSecondsTimePressed);
             startCancelButton.Pressed += new EventHandler(OnStartCancelPressed);
             addTimeButton.Pressed += new EventHandler(AddTimePressed); //New button
             subtractTimeButton.Pressed += new EventHandler(SubtractTimePressed); //New button
@@ -43,6 +56,8 @@ namespace MicrowaveOvenLibrary.Controllers
             myCooker = cooker;
             myLight = light;
             myDisplay = display;
+            _powerTube = powertube;
+            mySoundBuzzer = soundBuzzer;//
         }
 
         //New method made by Nadia
@@ -70,7 +85,8 @@ namespace MicrowaveOvenLibrary.Controllers
         private void ResetValues()
         {
             powerLevel = 50;
-            time = 1;
+            minutes = 0;
+            seconds = 0;
         }
 
         public void OnPowerPressed(object sender, EventArgs e)
@@ -82,7 +98,7 @@ namespace MicrowaveOvenLibrary.Controllers
                     myState = States.SETPOWER;
                     break;
                 case States.SETPOWER:
-                    powerLevel = (powerLevel >= 700 ? 50 : powerLevel+50);
+                    powerLevel = (powerLevel >= _powerTube.Maxpower ? 50 : powerLevel+50);
                     myDisplay.ShowPower(powerLevel);
                     break;
             }
@@ -93,12 +109,32 @@ namespace MicrowaveOvenLibrary.Controllers
             switch (myState)
             {
                 case States.SETPOWER:
-                    myDisplay.ShowTime(time, 0);
+                    myDisplay.ShowTime(minutes, seconds);
                     myState = States.SETTIME;
                     break;
                 case States.SETTIME:
-                    time += 1;
-                    myDisplay.ShowTime(time, 0);
+                    minutes += 1;
+                    myDisplay.ShowTime(minutes, seconds);
+                    break;
+            }
+        }
+
+        public void OnSecondsTimePressed(object sender, EventArgs e)
+        {
+            switch (myState)
+            {
+                case States.SETPOWER:
+                    myDisplay.ShowTime(minutes, seconds);
+                    myState = States.SETTIME;
+                    break;
+                case States.SETTIME:
+                    seconds += 1;
+                    if (seconds >= 60)
+                    {
+                        minutes += 1;
+                        seconds = 0;
+                    }
+                    myDisplay.ShowTime(minutes, seconds);
                     break;
 
             }
@@ -115,7 +151,7 @@ namespace MicrowaveOvenLibrary.Controllers
                     break;
                 case States.SETTIME:
                     myLight.TurnOn();
-                    myCooker.StartCooking(powerLevel, time*60);
+                    myCooker.StartCooking(powerLevel, minutes*60+seconds);
                     myState = States.COOKING;
                     break;
                 case States.COOKING:
@@ -176,6 +212,8 @@ namespace MicrowaveOvenLibrary.Controllers
                     ResetValues();
                     myDisplay.Clear();
                     myLight.TurnOff();
+                    mySoundBuzzer.Buzz3Times(); //
+
                     // Beep 3 times
                     myState = States.READY;
                     break;
