@@ -8,7 +8,7 @@ namespace MicrowaveOvenLibrary.Boundary
         private IOutput myOutput;
 
         private bool IsOn = false;
-        public int Maxpower { get;}
+        public int Maxpower { get; set; }
 
         public PowerTube(IOutput output, int maxpower)
         {
