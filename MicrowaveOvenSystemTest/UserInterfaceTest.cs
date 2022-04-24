@@ -339,7 +339,7 @@ namespace Microwave.Test.Unit
             light.Received(1).TurnOff();
         }
 
-        //tilføjet
+        //tilføjet:
         [Test]
         public void Cooking_CookingIsDone_Buzz3TimesIsCalled()
         {
@@ -352,7 +352,7 @@ namespace Microwave.Test.Unit
 
             uut.CookingIsDone();
             soundBuzzer.Received(1).Buzz3Times();
-            //.Buzz3Times();
+            
         }
 
     }

@@ -30,5 +30,9 @@ namespace MicrowaveOvenSystemTest_unit
             uut.Buzz3Times();
             output.Received(1).OutputLine(Arg.Is<string>(str => str.Equals("Bzzz, Bzzz, Bzzz")));
         }
+
+
+
+
     }
 }
