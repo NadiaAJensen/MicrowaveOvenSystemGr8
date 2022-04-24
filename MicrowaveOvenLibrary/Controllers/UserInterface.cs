@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
+
 using MicrowaveOvenLibrary.Boundary;
+
 using MicrowaveOvenLibrary.Interfaces;
 
 namespace MicrowaveOvenLibrary.Controllers
@@ -18,8 +20,10 @@ namespace MicrowaveOvenLibrary.Controllers
         private ILight myLight;
         private IDisplay myDisplay;
 
+
         //  SB
         private ISoundbuzzer mySoundBuzzer;
+
 
         private int powerLevel = 50;
         private int time = 1;
@@ -31,7 +35,9 @@ namespace MicrowaveOvenLibrary.Controllers
             IDoor door,
             IDisplay display,
             ILight light,
+
             ICookController cooker, ISoundbuzzer soundBuzzer)//
+
         {
             powerButton.Pressed += new EventHandler(OnPowerPressed);
             timeButton.Pressed += new EventHandler(OnTimePressed);
@@ -155,6 +161,8 @@ namespace MicrowaveOvenLibrary.Controllers
                     myDisplay.Clear();
                     myLight.TurnOff();
                     mySoundBuzzer.Buzz3Times(); //
+
+                    // Beep 3 times
                     myState = States.READY;
                     break;
             }

@@ -48,9 +48,11 @@ namespace Microwave.Test.Integration
 
             cooker = new CookController(timer, display, powerTube);
 
+
             soundbuzzer = new SoundBuzzer(output);
 
             ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker, soundbuzzer);
+          
             cooker.UI = ui;
         }
 
@@ -163,6 +165,7 @@ namespace Microwave.Test.Integration
             ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
                 door, display, light, cooker, soundbuzzer);
+
             // And make the association
             cooker.UI = ui;
 

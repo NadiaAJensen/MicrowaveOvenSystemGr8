@@ -47,6 +47,7 @@ namespace Microwave.Test.Integration
             soundbuzzer = new SoundBuzzer(output);
 
             ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker, soundbuzzer);
+
             cooker.UI = ui;
         }
 
