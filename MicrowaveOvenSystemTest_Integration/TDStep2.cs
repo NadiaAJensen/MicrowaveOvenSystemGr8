@@ -26,6 +26,7 @@ namespace Microwave.Test.Integration
         private IPowerTube powerTube;
         private ITimer timer;
         private IOutput output;
+        private ISoundbuzzer soundbuzzer;
 
         [SetUp]
         public void Setup()
@@ -45,8 +46,13 @@ namespace Microwave.Test.Integration
 
             cooker = new CookController(timer, display, powerTube);
 
-            ui = new UserInterface(powerButton, timeButton, secondsButton, startCancelButton, door, display, light, cooker);
+
+            soundbuzzer = new SoundBuzzer(output);
+
+            ui = new UserInterface(powerButton, timeButton,secondsButton, startCancelButton, door, display, light, cooker, powerTube, soundbuzzer);
             cooker.UI = ui;
+
+            powerTube.Maxpower = 700;
         }
 
         #region UI_Light
@@ -79,28 +85,28 @@ namespace Microwave.Test.Integration
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains("50 W")));
         }
 
-        [Test]
-        public void UI_Display_ShowPower_150W()
-        {
+      [Test]
+      public void UI_Display_ShowPower_150W()
+      {
+         powerButton.Press();
+         powerButton.Press();
+         powerButton.Press();
+
+         output.Received().OutputLine(Arg.Is<string>(str => str.Contains("150 W")));
+      }
+
+      [Test]
+      public void UI_Display_ShowPower_700W()
+      {
+         for (int p = 50; p <= 700; p += 50)
+         {
             powerButton.Press();
-            powerButton.Press();
-            powerButton.Press();
+         }
 
-            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("150 W")));
-        }
+         output.Received().OutputLine(Arg.Is<string>(str => str.Contains("700 W")));
+      }
 
-        [Test]
-        public void UI_Display_ShowPower_700W()
-        {
-            for (int p = 50; p <= 700; p += 50)
-            {
-                powerButton.Press();
-            }
-
-            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("700 W")));
-        }
-
-        [Test]
+      [Test]
         public void UI_Display_Showtime_1min()
         {
             powerButton.Press();
@@ -179,36 +185,36 @@ namespace Microwave.Test.Integration
             powerTube.Received().TurnOn(50);
         }
 
-        [Test]
-        public void UI_CookController_StartCooking_100W()
-        {
+      [Test]
+      public void UI_CookController_StartCooking_100W()
+      {
+         powerButton.Press();
+         powerButton.Press();
+         timeButton.Press();
+         startCancelButton.Press();
+
+         // Cooking has started
+         // Can be verified by powertube
+         powerTube.Received().TurnOn(100);
+      }
+
+      [Test]
+      public void UI_CookController_StartCooking_700W()
+      {
+         for (int p = 50; p <= 700; p += 50)
+         {
             powerButton.Press();
-            powerButton.Press();
-            timeButton.Press();
-            startCancelButton.Press();
+         }
 
-            // Cooking has started
-            // Can be verified by powertube
-            powerTube.Received().TurnOn(100);
-        }
+         timeButton.Press();
+         startCancelButton.Press();
 
-        [Test]
-        public void UI_CookController_StartCooking_700W()
-        {
-            for (int p = 50; p <= 700; p += 50)
-            {
-                powerButton.Press();
-            }
+         // Cooking has started
+         // Can be verified by powertube
+         powerTube.Received().TurnOn(700);
+      }
 
-            timeButton.Press();
-            startCancelButton.Press();
-
-            // Cooking has started
-            // Can be verified by powertube
-            powerTube.Received().TurnOn(700);
-        }
-
-        [Test]
+      [Test]
         public void UI_CookController_Stop()
         {
             powerButton.Press();

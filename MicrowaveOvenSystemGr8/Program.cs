@@ -19,15 +19,19 @@ namespace MicrowaveOvenSystemGr8
 
             Display display = new Display(output);
 
-            PowerTube powerTube = new PowerTube(output);
+            PowerTube powerTube = new PowerTube(output,700);
 
             Light light = new Light(output);
 
             Timer timer = new Timer();
 
+
+            SoundBuzzer soundBuzzer = new SoundBuzzer(output); //
+
             CookController cooker = new CookController(timer, display, powerTube);
 
-            UserInterface ui = new UserInterface(powerButton, minutesButton, secondsButton, startCancelButton, door, display, light, cooker);
+
+            UserInterface ui = new UserInterface(powerButton, minutesButton, secondsButton, startCancelButton, door, display, light, cooker, powerTube,soundBuzzer);//
 
             // Finish the double association
             cooker.UI = ui;

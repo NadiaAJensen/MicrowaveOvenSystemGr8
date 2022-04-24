@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
+
+using MicrowaveOvenLibrary.Boundary;
+
 using MicrowaveOvenLibrary.Interfaces;
 
 namespace MicrowaveOvenLibrary.Controllers
@@ -16,6 +19,12 @@ namespace MicrowaveOvenLibrary.Controllers
         private ICookController myCooker;
         private ILight myLight;
         private IDisplay myDisplay;
+        private IPowerTube _powerTube;
+
+
+        //  SB
+        private ISoundbuzzer mySoundBuzzer;
+
 
         private int powerLevel = 50;
         private int minutes = 1;
@@ -29,7 +38,8 @@ namespace MicrowaveOvenLibrary.Controllers
             IDoor door,
             IDisplay display,
             ILight light,
-            ICookController cooker)
+            ICookController cooker,IPowerTube powertube, ISoundbuzzer soundBuzzer)
+
         {
             powerButton.Pressed += new EventHandler(OnPowerPressed);
             timeButton.Pressed += new EventHandler(OnTimePressed);
@@ -42,6 +52,8 @@ namespace MicrowaveOvenLibrary.Controllers
             myCooker = cooker;
             myLight = light;
             myDisplay = display;
+            _powerTube = powertube;
+            mySoundBuzzer = soundBuzzer;//
         }
 
         private void ResetValues()
@@ -60,7 +72,7 @@ namespace MicrowaveOvenLibrary.Controllers
                     myState = States.SETPOWER;
                     break;
                 case States.SETPOWER:
-                    powerLevel = (powerLevel >= 700 ? 50 : powerLevel+50);
+                    powerLevel = (powerLevel >= _powerTube.Maxpower ? 50 : powerLevel+50);
                     myDisplay.ShowPower(powerLevel);
                     break;
             }
@@ -173,6 +185,8 @@ namespace MicrowaveOvenLibrary.Controllers
                     ResetValues();
                     myDisplay.Clear();
                     myLight.TurnOff();
+                    mySoundBuzzer.Buzz3Times(); //
+
                     // Beep 3 times
                     myState = States.READY;
                     break;
