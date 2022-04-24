@@ -204,6 +204,22 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
+        public void SetTimeSeconds_AboveSixty_StartButton_DisplayIsCorrect()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            for (int i = 0; i <= 70; i++)
+            {
+                secondsButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            }
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+            // Time is already at 1 minute. Therefore:
+            display.Received(1).ShowTime(Arg.Is<int>(2), Arg.Is<int>(10));
+        }
+
+        [Test]
         public void SetTime_DoorOpened_DisplayCleared()
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
